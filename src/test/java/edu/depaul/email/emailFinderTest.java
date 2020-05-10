@@ -8,9 +8,14 @@ import org.junit.jupiter.api.Test;
 
 public class emailFinderTest {
     @Test
-    @DisplayName("Valid URL")
+    @DisplayName("Default Valid URL")
     void ValidURLTest() {
         EmailFinder.main(new String[] {"https://d2l.depaul.edu/d2l/home"});
+    }
+    @Test
+    @DisplayName("Invalid URL with length greater than 1")
+    void InvalidURLFormatTest() {
+        EmailFinder.main(new String[] {"aidgbi:x/d2l.depaul.edu/d2l/home"});
     }
     @Test
     @DisplayName("Invalid URL with length less than 1")
@@ -19,7 +24,7 @@ public class emailFinderTest {
     }
     @Test
     @DisplayName("Null URL")
-    void nullURLTest2() {
+    void nullURLTest() {
         EmailFinder.main(new String[] {});
     }
 }
