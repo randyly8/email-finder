@@ -10,18 +10,21 @@ public class emailFinderTest {
     @Test
     @DisplayName("Default Valid URL")
     void ValidURLTest() {
-        EmailFinder.main(new String[] {"https://d2l.depaul.edu/d2l/home"});
+        EmailFinder.main(new String[] {"http://cdm.depaul.edu"});
     }
+
     @Test
     @DisplayName("Invalid URL with length greater than 1")
     void InvalidURLFormatTest() {
-        EmailFinder.main(new String[] {"aidgbi:x/d2l.depaul.edu/d2l/home"});
+        EmailFinder.main(new String[] {"qwerty://cdm.depaul.edu"});
     }
+
     @Test
     @DisplayName("Invalid URL with length less than 1")
     void URLOfSizeLessThan1Test() {
         EmailFinder.main(new String[] {""});
     }
+
     @Test
     @DisplayName("Null URL")
     void nullURLTest() {
