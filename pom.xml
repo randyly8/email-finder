@@ -117,11 +117,11 @@
           <appendAssemblyId>false</appendAssemblyId>
           <descriptors>
             <descriptor>src/assembly/assembly.xml</descriptor>
-            <descriptorRefs>
-              <descriptorRef>src</descriptorRef>
-              <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
           </descriptors>
+          <descriptorRefs>
+            <descriptorRef>src</descriptorRef>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
           <archive>
             <manifest>
               <mainClass>edu.depaul.email.EmailFinder</mainClass>
