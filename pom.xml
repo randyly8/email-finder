@@ -113,7 +113,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
-          <finalName>rLy</finalName>
+          <finalName>rLyEmailFinder</finalName>
           <appendAssemblyId>false</appendAssemblyId>
           <descriptors>
             <descriptor>src/assembly/assembly.xml</descriptor>
