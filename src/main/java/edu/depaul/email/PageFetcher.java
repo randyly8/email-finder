@@ -6,6 +6,7 @@
 
 package edu.depaul.email;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.jsoup.Jsoup;
@@ -31,21 +32,35 @@ public class PageFetcher {
     Document doc = Jsoup.connect(url).get();
     return doc.outerHtml();
     } catch (IOException e) {
-      throw new PageFetcherException("unable to fetch " + url, e);
+      throw new EmailFinderException("unable to fetch " + url, e);
     } catch (IllegalArgumentException e) {
-      throw new PageFetcherException("Invalid URL " + url, e);
+      throw new EmailFinderException("Invalid URL " + url, e);
     }
   }
 
   public Document get(String url) {
     try {
-      Document doc = Jsoup.connect(url).get();
-      return doc;
+      if (url.startsWith("http")) {
+        return getFromWeb(url);
+      } else {
+        return getFromFile(url);
+      }
     } catch (IOException e) {
-      throw new PageFetcherException("unable to fetch " + url, e);
+      throw new EmailFinderException("unable to fetch " + url, e);
     } catch (IllegalArgumentException e) {
-      throw new PageFetcherException("Invalid URL " + url, e);
+      throw new EmailFinderException("Invalid URL " + url, e);
     }
+  }
+
+  private Document getFromWeb(String url) throws IOException {
+    Document doc = Jsoup.connect(url).get();
+    return doc;
+  }
+
+  private Document getFromFile(String path) throws IOException {
+    File input = new File(path);
+    Document doc = Jsoup.parse(input, "UTF-8");
+    return doc;
   }
 
 }

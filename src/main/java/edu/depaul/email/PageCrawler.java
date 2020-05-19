@@ -5,25 +5,58 @@
  */
 package edu.depaul.email;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.jsoup.nodes.Document;
 
+import static edu.depaul.email.StorageService.StorageType.EMAIL;
+import static edu.depaul.email.StorageService.StorageType.GOODLINKS;
+import static edu.depaul.email.StorageService.StorageType.BADLINKS;
+
+
 /**
- *
+ * Given a starting URL string, this class finds links and email addresses
+ * on the referenced page and the recursively performs the same task on
+ * any links it finds.
+ * When the target number of emails have been found, the process write out 3
+ * results:
+ * 1. list of email addresses
+ * 2. list of URLs that were successfully processed
+ * 3. list of URLs that could not be reached
  */
 public class PageCrawler {
   private int maxEmails= 50;
+
+  public Set<String> getEmails() {
+    return emails;
+  }
+
+  public Set<String> getGoodLinks() {
+    return goodLinks;
+  }
+
+  public Set<String> getBadLinks() {
+    return badLinks;
+  }
+
   private Set<String> emails = new HashSet<>();
-  PageFetcher fetcher = new PageFetcher();
-  PageParser parser = new PageParser();
-  String base = null;
-  Set<String> checkedUrls = new HashSet<>();
+  private PageFetcher fetcher = new PageFetcher();
+  private PageParser parser = new PageParser();
+  private String base = null;
+  private Set<String> checkedUrls = new HashSet<>();
+  private Set<String> goodLinks = new HashSet<>();
+  private Set<String> badLinks = new HashSet<>();
+
+  private StorageService storage;
+
+  public PageCrawler(StorageService storage) {
+    this(storage, 50);
+  }
+
+  public PageCrawler(StorageService storage, int maxEmails) {
+    this.storage = storage;
+    this.maxEmails = maxEmails;
+  }
 
   public void crawl(String url) {
 
@@ -31,15 +64,22 @@ public class PageCrawler {
       return;
     }
     if (base == null) {
-      base = url;
+      if (url.startsWith("http")) {
+        base = url;
+      } else {
+        base = "";
+      }
     }
     Document doc = null;
     try {
+       checkedUrls.add(url);
        doc = fetcher.get(url);
     } catch (Exception e) {
+      badLinks.add(url);
       System.out.println(e.getMessage());
       return;
     }
+    goodLinks.add(url);
     Set<String> newEmails = parser.findEmails(doc);
     if (newEmails.size() > 0) {
       emails.addAll(newEmails);
@@ -64,24 +104,10 @@ public class PageCrawler {
     System.out.println(emails.size());
   }
 
-  public void report(String fileName) {
-
-    FileOutputStream stream = null;
-    try {
-      stream = new FileOutputStream(fileName);
-      ListWriter writer = new ListWriter(stream);
-      writer.writeList(emails);
-    } catch (Exception err) {
-      throw new PageFetcherException("Error while write out email addresses", err);
-    } finally {
-      if (stream != null) {
-        try {
-          stream.close();
-        } catch (IOException err) {
-          throw new PageFetcherException("Error while closing output file", err);
-        }
-      }
-    }
+  public void report() {
+    storage.storeList(EMAIL, emails);
+    storage.storeList(GOODLINKS, goodLinks);
+    storage.storeList(BADLINKS, badLinks);
   }
 
 }
