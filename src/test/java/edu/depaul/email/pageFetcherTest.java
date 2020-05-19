@@ -14,7 +14,6 @@ public class pageFetcherTest {
         PageFetcher fetcher = new PageFetcher();
         assertNotNull(fetcher);
     }
-
     @Test
     @DisplayName("Test if string is returned")
     void getStringTest() {
@@ -22,7 +21,6 @@ public class pageFetcherTest {
         String output = fetcher.getString("https://chicago.suntimes.com/");
         assertNotNull(output);
     }
-
     @Test
     @DisplayName("Test if string return IO Exception")
     void getStringInvalidURLTest() {
@@ -33,7 +31,6 @@ public class pageFetcherTest {
             System.out.println(e);
         }
     }
-
     @Test
     @DisplayName("Test if string return Illegal Argument Exception")
     void getStringEmptyTest() {
@@ -44,8 +41,6 @@ public class pageFetcherTest {
             System.out.println(e);
         }
     }
-
-
     @Test
     @DisplayName("Get URL test")
     void getURLTest() {
