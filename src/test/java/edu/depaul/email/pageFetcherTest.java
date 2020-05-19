@@ -1,6 +1,7 @@
 package edu.depaul.email;
 
 import org.jsoup.nodes.Document;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,10 +43,18 @@ public class pageFetcherTest {
         }
     }
     @Test
-    @DisplayName("Get URL test")
-    void getURLTest() {
+    @DisplayName("Get URL test starting with http")
+    void getURLHTTPTest() {
         PageFetcher fetcher = new PageFetcher();
         Document doc = fetcher.get("https://chicago.suntimes.com/");
+        assertNotNull(doc);
+    }
+    @Test
+    @Disabled
+    @DisplayName("Get URL test no http")
+    void getURLTest() {
+        PageFetcher fetcher = new PageFetcher();
+        Document doc = fetcher.get("chicago.suntimes.com");
         assertNotNull(doc);
     }
     @Test
