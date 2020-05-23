@@ -1,11 +1,10 @@
 package edu.depaul.email;
 
 import org.jsoup.nodes.Document;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class pageFetcherTest {
 
@@ -16,65 +15,81 @@ public class pageFetcherTest {
         assertNotNull(fetcher);
     }
     @Test
-    @DisplayName("Test if string is returned")
+    @DisplayName("Test if string is returned from valid URL")
     void getStringTest() {
         PageFetcher fetcher = new PageFetcher();
         String output = fetcher.getString("https://chicago.suntimes.com/");
         assertNotNull(output);
     }
     @Test
-    @DisplayName("Test if string return IO Exception")
+    @DisplayName("Test for invalid URL of length greater than 1")
     void getStringInvalidURLTest() {
         PageFetcher fetcher = new PageFetcher();
         try {
-            String output = fetcher.getString("https://chicago.suntimes.co/");
+            fetcher.getString("https://chicago.suntimes.co/");
         } catch (Exception e) {
-            System.out.println(e);
+            assertEquals(e.toString(), "edu.depaul.email.EmailFinderException: unable to fetch https://chicago.suntimes.co/");
         }
     }
     @Test
-    @DisplayName("Test if string return Illegal Argument Exception")
+    @DisplayName("Test for invalid URL of length less than 1")
     void getStringEmptyTest() {
         PageFetcher fetcher = new PageFetcher();
         try {
-            String output = fetcher.getString("");
+            fetcher.getString("");
         } catch (Exception e) {
-            System.out.println(e);
+            assertEquals(e.toString(), "edu.depaul.email.EmailFinderException: Invalid URL ");
         }
     }
+
+
     @Test
-    @DisplayName("Get URL test starting with http")
-    void getURLHTTPTest() {
+    @DisplayName("Get test on URL with http")
+    void getURLTest() {
         PageFetcher fetcher = new PageFetcher();
         Document doc = fetcher.get("https://chicago.suntimes.com/");
         assertNotNull(doc);
     }
     @Test
-    @Disabled
-    @DisplayName("Get URL test no http")
-    void getURLTest() {
-        PageFetcher fetcher = new PageFetcher();
-        Document doc = fetcher.get("chicago.suntimes.com");
-        assertNotNull(doc);
-    }
-    @Test
-    @DisplayName("Test if URL return IO Exception")
+    @DisplayName("Get test on invalid URL with http")
     void getInvalidURLTest() {
         PageFetcher fetcher = new PageFetcher();
         try {
-            Document doc = fetcher.get("https://chicago.suntimes.co/");
+            fetcher.get("https://chicago.suntimes.co/");
         } catch (Exception e) {
-            System.out.println(e);
+            assertEquals(e.toString(), "edu.depaul.email.EmailFinderException: unable to fetch https://chicago.suntimes.co/");
         }
     }
     @Test
-    @DisplayName("Test if URL return Illegal Argument Exception")
+    @DisplayName("Get path test")
+    void getPathTest() {
+        PageFetcher fetcher = new PageFetcher();
+        Document doc = fetcher.get("stringForTesting");
+        assertNotNull(doc);
+    }
+    @Test
+    @DisplayName("Get invalid path test")
+    void getInvalidPathTest() {
+        PageFetcher fetcher = new PageFetcher();
+        try {
+            fetcher.get("nonexistentPath");
+        } catch (Exception e) {
+            assertEquals(e.toString(), "edu.depaul.email.EmailFinderException: unable to fetch nonexistentPath");
+        }
+    }
+
+
+
+
+
+    @Test
+    @DisplayName("Test get on path/URL of length less than 1")
     void getEmptyTest() {
         PageFetcher fetcher = new PageFetcher();
         try {
-            Document doc = fetcher.get("");
+            fetcher.get("");
         } catch (Exception e) {
-            System.out.println(e);
+            assertEquals(e.toString(), "edu.depaul.email.EmailFinderException: unable to fetch ");
         }
     }
 }
