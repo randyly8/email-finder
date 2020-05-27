@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class listWriterTest {
     @Test
-    @DisplayName("")
-    void test() {
+    @DisplayName("Constructor Test")
+    void constructorTest() {
     }
 }

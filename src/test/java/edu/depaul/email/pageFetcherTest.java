@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class pageFetcherTest {
 
     @Test
-    @DisplayName("Initial Constructor Test")
+    @DisplayName("Constructor Test")
     void constructorTest() {
         PageFetcher fetcher = new PageFetcher();
         assertNotNull(fetcher);
@@ -77,14 +77,19 @@ public class pageFetcherTest {
             assertEquals(e.toString(), "edu.depaul.email.EmailFinderException: unable to fetch nonexistentPath");
         }
     }
-
-
-
-
-
+    @Test
+    @DisplayName("Test get on path/URL to empty file")
+    void getEmptyTest() {
+        PageFetcher fetcher = new PageFetcher();
+        try {
+            fetcher.get("empty");
+        } catch (Exception e) {
+            assertEquals(e.toString(), "edu.depaul.email.EmailFinderException: unable to fetch empty");
+        }
+    }
     @Test
     @DisplayName("Test get on path/URL of length less than 1")
-    void getEmptyTest() {
+    void getNullPathURLTest() {
         PageFetcher fetcher = new PageFetcher();
         try {
             fetcher.get("");

@@ -13,6 +13,21 @@ public class pageParserTest {
     String validEmails = "[earmstro@yahoo.com, kronvold@gmail.com, barjam@comcast.net, seanq@optonline.net, north@icloud.com, demmel@att.net, sthomas@hotmail.com, novanet@outlook.com, miltchev@gmail.com, fallorn@gmail.com, citadel@yahoo.com, grolschie@gmail.com]";
     String validLinks = "[http://www.youtube.com, http://www.facebook.com, http://www.baidu.com, http://www.yahoo.com, http://www.amazon.com, http://www.wikipedia.org, http://www.qq.com, http://www.google.com, http://www.twitter.com, http://www.live.com]";
     @Test
+    @DisplayName("Constructor Test")
+    void constructorTest() {
+        PageParser parser = new PageParser();
+        assertNotNull(parser);
+    }
+    @Test
+    @DisplayName("Find no emails")
+    void findNoEmailTest() {
+        PageFetcher fetcher = new PageFetcher();
+        Document doc = fetcher.get("stringForTesting");
+        PageParser parser = new PageParser();
+        Set<String> content = parser.findEmails(doc);
+        assertEquals(content.toString(), "[]");
+    }
+    @Test
     @DisplayName("Find (1) email")
     void findEmailTest() {
         PageFetcher fetcher = new PageFetcher();
@@ -38,6 +53,15 @@ public class pageParserTest {
         PageParser parser = new PageParser();
         Set<String> content = parser.findEmails(doc);
         assertEquals(content.toString(), "[seanq@optonline.net]");
+    }
+    @Test
+    @DisplayName("Find no links")
+    void findNoLinkTest() {
+        PageFetcher fetcher = new PageFetcher();
+        Document doc = fetcher.get("stringForTesting");
+        PageParser parser = new PageParser();
+        Set<String> content = parser.findLinks(doc);
+        assertEquals(content.toString(), "[]");
     }
     @Test
     @Disabled
