@@ -13,7 +13,6 @@ import static edu.depaul.email.StorageService.StorageType.EMAIL;
 import static edu.depaul.email.StorageService.StorageType.GOODLINKS;
 import static edu.depaul.email.StorageService.StorageType.BADLINKS;
 
-
 /**
  * Given a starting URL string, this class finds links and email addresses
  * on the referenced page and the recursively performs the same task on
