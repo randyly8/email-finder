@@ -19,6 +19,13 @@ public class pageCrawlerTest {
         assertNotNull(crawler);
     }
     @Test
+    @DisplayName("Constructor Test with max size")
+    void constructorMaxTest() {
+        StorageService storage = mock(StorageService.class);
+        PageCrawler crawler = new PageCrawler(storage, 50);
+        assertNotNull(crawler);
+    }
+    @Test
     @DisplayName("Nonexistent file test on email")
     void noFileEmailTest() {
         StorageService storage = mock(StorageService.class);
