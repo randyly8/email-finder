@@ -64,7 +64,6 @@ public class pageParserTest {
         assertEquals(content.toString(), "[]");
     }
     @Test
-    @Disabled
     @DisplayName("Find (1) link")
     void findLinkTest() {
         PageFetcher fetcher = new PageFetcher();
@@ -74,7 +73,6 @@ public class pageParserTest {
         assertEquals(content.toString(), "[https://d2l.depaul.edu/d2l/home]");
     }
     @Test
-    @Disabled
     @DisplayName("Find links")
     void findMultipleLinksTest() {
         PageFetcher fetcher = new PageFetcher();
@@ -84,7 +82,6 @@ public class pageParserTest {
         assertEquals(content.toString(), validLinks);
     }
     @Test
-    @Disabled
     @DisplayName("Find valid link in list of invalid emails and links")
     void findLinkInRandomListTest() {
         PageFetcher fetcher = new PageFetcher();

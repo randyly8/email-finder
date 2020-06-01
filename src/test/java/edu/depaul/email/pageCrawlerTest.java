@@ -67,7 +67,6 @@ public class pageCrawlerTest {
         assertEquals(crawling.getGoodLinks().size(), 0);
     }
     @Test
-    @Disabled
     @DisplayName("Empty test on good link")
     void emptyGoodLinkTest() {
         StorageService storage = mock(StorageService.class);
@@ -84,7 +83,6 @@ public class pageCrawlerTest {
         assertEquals(crawling.getGoodLinks().size(), 1);
     }
     @Test
-    @Disabled
     @DisplayName("Test on more than 1 good link")
     void multipleGoodLinkTest() {
         StorageService storage = mock(StorageService.class);
@@ -110,7 +108,6 @@ public class pageCrawlerTest {
         assertEquals(crawling.getBadLinks().size(), 0);
     }
     @Test
-    @Disabled
     @DisplayName("Test on 1 bad link")
     void singleBadLinkTest() {
         StorageService storage = mock(StorageService.class);
@@ -119,7 +116,6 @@ public class pageCrawlerTest {
         assertEquals(crawling.getBadLinks().size(), 1);
     }
     @Test
-    @Disabled
     @DisplayName("Test on more than 1 bad link")
     void multipleBadLinkTest() {
         StorageService storage = mock(StorageService.class);
